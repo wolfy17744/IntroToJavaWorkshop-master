@@ -17,17 +17,25 @@ import com.sun.speech.freetts.VoiceManager;
 public class SpeakAndSpell {
 
 	public static void main(String[] args) {
+		String word;
+		String wordanswer;
+		word = JOptionPane.showInputDialog("what is the word");
 		// 1. Use the speak method to say the word. "e.g. spell mandlebrot"
-
+		speak(word);
 		// 2. Catch the user's answer in a String
-
+		wordanswer = JOptionPane.showInputDialog("how is this spelled");
 		// 3. If the user spelled the word correctly, speak "correct"
-
+		if(word.equals(wordanswer)) {
+			speak( "Most likely correct");
+		}else {
+			speak( "WRONG!");
+		}
+	}
 		// 4. Otherwise say "wrong"
-
+		
 		// 5. repeat the process for other words
 		
-	}
+	
 
 	static void speak(String words) {
 		Voice voice = VoiceManager.getInstance().getVoice("kevin16");
