@@ -12,23 +12,27 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.JApplet;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
 
 public class ScaryMaze extends JPanel implements Runnable, MouseMotionListener {
 	
 	BufferedImage maze;
-	final int frameWidth = 600;
-	final int frameHeight = 400;
+	final int frameWidth = 800;
+	final int frameHeight = 600;
 
 	ScaryMaze() throws Exception {
 		//1. Use this online tool to make a maze image and drop it into your day5 package: http://pixlr.com/editor/
 		maze = ImageIO.read(getClass().getResource("maze.png"));
 		//2. set the mouse pointer to the start of your maze using:
-		//new Robot().mouseMove(xPosition, yPosition)
+		new Robot().mouseMove(0, 48);
 		
 		//3. add a mouse motion listener using:
-		//addMouseMotionListener(this)
+		addMouseMotionListener(this);
 		
 	}
 
@@ -38,17 +42,22 @@ public class ScaryMaze extends JPanel implements Runnable, MouseMotionListener {
 		int mouseY = e.getY();
 		int mouseColor = maze.getRGB(mouseX, mouseY);
 		//4. print the mouseColor variable to see what color the mouse is touching
-
+		System.out.println(mouseColor);
 		//5. make a variable to hold the background color. 
-
+		int bc =  -16777216;
 		//6. if the mouse falls off the path (if it is on the background)
-		
+		if (mouseColor == bc) {
+			scare();
+			
 				// call the scare method
-		
+		}
 		//10. if the mouse is on the end color
-				
+		if (mouseColor == -16776961) {
+			
+			speak("you win");
 				// pop up a message to tell them they won
-		
+			JOptionPane.showMessageDialog(null, "YAY!!!!!!");
+		}
 	}
 
 	private void scare() {
@@ -57,9 +66,10 @@ public class ScaryMaze extends JPanel implements Runnable, MouseMotionListener {
 		//AudioClip sound = JApplet.newAudioClip(getClass().getResource("scream.wav"));
 		
 		//8. play the scary sound. Hint: type "sound" and then a period.		
-		
+		speak("Suprise");
 		//9. drop an image into your day5 package, and use the showScaryImage method to scare your victim!
-
+		showScaryImage("catface.jpg");
+		
 	}
 
 	private void showScaryImage(String imageName) {
@@ -93,6 +103,13 @@ public class ScaryMaze extends JPanel implements Runnable, MouseMotionListener {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {}
+	
+	static void speak(String words) {
+		Voice voice = VoiceManager.getInstance().getVoice("kevin16");
+		voice.allocate();
+		voice.speak(words);
+	}
+
 
 }
 

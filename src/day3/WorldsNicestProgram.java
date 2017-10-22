@@ -2,6 +2,9 @@ package day3;
 
 import javax.swing.JOptionPane;
 
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
+
 public class WorldsNicestProgram {
 	public static void main(String[] args) {
 		
@@ -11,22 +14,27 @@ public class WorldsNicestProgram {
 		name = JOptionPane.showInputDialog("What is your name");
 		
 		System.out.println(name);
-		JOptionPane.showMessageDialog(null, "Hello " + name);
-		JOptionPane.showMessageDialog(null, "you are a person" );
+		speak("Hello " + name);
+		speak( "you are a person" );
 		
 		fvc = JOptionPane.showInputDialog("What is your favorite colour");
-		JOptionPane.showMessageDialog(null, "yours is " + fvc + "! Me too");
+		speak( "yours is " + fvc + "! Me too");
 		
-		JOptionPane.showMessageDialog(null, "one more question..." );
+		speak( "one more question..." );
 		ssn = JOptionPane.showInputDialog("what is your credit card number?");
 		
-		if(ssn == ssn) {
+		if(ssn.equals(ssn)) {
 			
-			JOptionPane.showMessageDialog(null, "thanks" );
+			speak( "thanks" );
 			
 		}else {
 			JOptionPane.showMessageDialog(null, "fine" );
 		}
 		}
+	static void speak(String words) {
+		Voice voice = VoiceManager.getInstance().getVoice("kevin16");
+		voice.allocate();
+		voice.speak(words);
+	}
 	}
 	
